@@ -6,25 +6,25 @@ formulario_bp = Blueprint('formularios', __name__)
 
 @formulario_bp.route('/', methods=['POST'])
 @jwt_required() 
-def create_formulario():
+def create_user():
     user_id = get_jwt_identity()
     return jsonify(FormularioController.create_formulario(user_id, request.get_json()))
 
-@formulario_bp.route('/', methods=['GET'])
+@formulario_bp.route('/ge', methods=['GET'])
 @jwt_required() 
-def create_formulario():
+def listar_user():
     user_id = get_jwt_identity()
-    return jsonify(FormularioController.create_formulario(user_id, request.get_json()))
+    return jsonify(FormularioController.listar_formulario(user_id, request.get_json()))
 
-@formulario_bp.route('/', methods=['PUT'])
+@formulario_bp.route('/pu/<int:user_id>', methods=['PUT'])
 @jwt_required() 
-def create_formulario():
+def put_user():
     user_id = get_jwt_identity()
-    return jsonify(FormularioController.create_formulario(user_id, request.get_json()))
+    return jsonify(FormularioController.put_formulario(user_id, request.get_json()))
 
-@formulario_bp.route('/', methods=['DELETE'])
+@formulario_bp.route('/de/<int:user_id>', methods=['DELETE'])
 @jwt_required() 
-def create_formulario():
+def delete_user():
     user_id = get_jwt_identity()
-    return jsonify(FormularioController.create_formulario(user_id, request.get_json()))
+    return jsonify(FormularioController.delete_formulario(user_id, request.get_json()))
 

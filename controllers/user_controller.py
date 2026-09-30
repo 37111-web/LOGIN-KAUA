@@ -10,14 +10,20 @@ class UserController:
         password = data.get('password')  
 
         if not username or not password:
-            return {"error": "Nome de usuário e senha são obrigatórios"}, 400 
+            return {
+                "error": "Nome de usuário e senha são obrigatórios"
+                }, 400 
         
         hashed_password = generate_password_hash(password)
         
         if UserModel.create_user(username, hashed_password):
-            return {"message": "Usuário registrado com sucesso"}, 201 
+            return {
+                "message": "Usuário registrado com sucesso"
+                }, 201 
         
-        return {"error": "Nome de usuário já existe"}, 400 
+        return {
+            "error": "Nome de usuário já existe"
+            }, 400 
 
     @staticmethod
     def login_user(data):
@@ -25,58 +31,22 @@ class UserController:
         password = data.get('password')  
 
         if not username or not password:
-            return {"error": "Nome de usuário e senha são obrigatórios"}, 400 
+            return {
+                "error": "Nome de usuário e senha são obrigatórios"
+                }, 400 
 
         user = UserModel.find_by_username(username)
-        if user and check_password_hash(user['password'], password):  
-            access_token = create_access_token(identity=str(user['id'])) 
-            return {"access_token": access_token}, 200  
+        
+        if user and check_password_hash(user['password'], password):
+            access_token = create_access_token(
+                identity=str(user['id'])
+            )
 
-        return {"error": "Nome de usuário ou senha inválidos"}, 401 
-    
-    @staticmethod
-    def get_user(data):
-        username = data.get('username')  
-        password = data.get('password')  
+            return {
+                "access_token": access_token
+            }, 200
 
-        if not username or not password:
-            return {"error": "Nome de usuário e senha são obrigatórios"}, 400 
-
-        user = UserModel.find_by_username(username)
-        if user and check_password_hash(user['password'], password):  
-            access_token = create_access_token(identity=str(user['id'])) 
-            return {"access_token": access_token}, 200  
-
-        return {"error": "Nome de usuário ou senha inválidos"}, 401 
-    
-    @staticmethod
-    def put_user(data):
-        username = data.get('username')  
-        password = data.get('password')  
-
-        if not username or not password:
-            return {"error": "Nome de usuário e senha são obrigatórios"}, 400 
-
-        user = UserModel.find_by_username(username)
-        if user and check_password_hash(user['password'], password):  
-            access_token = create_access_token(identity=str(user['id'])) 
-            return {"access_token": access_token}, 200  
-
-        return {"error": "Nome de usuário ou senha inválidos"}, 401 
-    
-
-    @staticmethod
-    def delete_user(data):
-        username = data.get('username')  
-        password = data.get('password')  
-
-        if not username or not password:
-            return {"error": "Nome de usuário e senha são obrigatórios"}, 400 
-
-        user = UserModel.find_by_username(username)
-        if user and check_password_hash(user['password'], password):  
-            access_token = create_access_token(identity=str(user['id'])) 
-            return {"access_token": access_token}, 200  
-
-        return {"error": "Nome de usuário ou senha inválidos"}, 401 
+        return {
+            "error": "Nome de usuário ou senha inválidos"
+        }, 401
     

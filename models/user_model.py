@@ -21,4 +21,3 @@ class UserModel:
             return None  
         finally:
             conn.close()  
-
